@@ -1,0 +1,59 @@
+..........................................................F..................
+======================================================================
+FAIL: test_default_settings (test_sambasense.TestThemeManager.test_default_settings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/unittest/mock.py", line 1432, in patched
+    return func(*newargs, **newkeywargs)
+  File "/home/justin/Projects/sambasense/tests/test_sambasense.py", line 581, in test_default_settings
+    self.assertEqual(tm.accent, "#f6d32d")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '#FFD700' != '#f6d32d'
+- #FFD700
++ #f6d32d
+
+
+----------------------------------------------------------------------
+Ran 77 tests in 0.133s
+
+FAILED (failures=1)
+
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[38;2;255;215;0m[1m  Local Shares[0m
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+  [2mNo shares configured.[0m
+
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[38;2;255;215;0m[1m  Remote Shares[0m
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+  [2mNo CIFS shares mounted.[0m
+
+
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[38;2;255;215;0m[1m  Mounted Shares[0m
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+  [2mNo CIFS shares currently mounted.[0m
+
+
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[38;2;255;215;0m[1m  Configured Shares[0m
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+  [2mNo shares configured.[0m
+
+
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[38;2;255;215;0m[1m  Configured Shares[0m
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+  [2mNo shares configured.[0m
+
+
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[38;2;255;215;0m[1m  SambaSense Status[0m
+[38;2;255;215;0m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+  [96mDistribution:[0m  arch
+  [96mPkg Manager:[0m   pacman
+  [96mSamba:[0m         [92minstalled[0m
+  [96msmbclient:[0m     [92minstalled[0m
+  [96mcifs-utils:[0m    [92minstalled[0m
+  [96mService:[0m       [91mstopped[0m
+

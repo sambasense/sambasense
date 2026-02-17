@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=SambaSense
+Comment=Samba Configuration & Management
+Exec=sambasense gui
+Icon=sambasense
+Terminal=false
+Type=Application
+Categories=System;Network;Settings;
+Keywords=samba;smb;cifs;share;network;

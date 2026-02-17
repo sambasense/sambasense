@@ -1,0 +1,35 @@
+app-id: com.sabyla.SambaSense
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: sambasense
+
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --filesystem=host
+  - --talk-name=org.freedesktop.PolicyKit1
+  - --system-talk-name=org.freedesktop.systemd1
+
+modules:
+  - name: python3-PyQt6
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-deps --prefix=/app PyQt6
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/source/P/PyQt6/PyQt6-6.6.1.tar.gz
+        sha256: FIXME
+
+  - name: sambasense
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-deps --prefix=/app .
+      - install -Dm644 assets/sambasense.svg /app/share/icons/hicolor/scalable/apps/com.sabyla.SambaSense.svg
+      - install -Dm644 packaging/flatpak/com.sabyla.SambaSense.desktop /app/share/applications/com.sabyla.SambaSense.desktop
+    sources:
+      - type: dir
+        path: ../..

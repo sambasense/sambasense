@@ -1,0 +1,6 @@
+total 1.4M
+-rw-r--r-- 1 justin justin  117K Feb 15 02:29 sambasense-1.1.0-1-any.pkg.tar.zst
+-rw-r--r-- 1 justin justin  112K Feb 15 02:30 sambasense-1.1.0-1.fc40.noarch.rpm
+-rw-r--r-- 1 justin justin   90K Feb 15 02:29 sambasense_1.1.0.deb
+-rw-r--r-- 1 justin justin   37K Feb 15 01:20 SambaSense.flatpak
+-rwxr-xr-x 1 justin justin 1019K Feb 15 01:20 SambaSense-x86_64.AppImage

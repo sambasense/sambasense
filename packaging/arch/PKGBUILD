@@ -1,0 +1,38 @@
+# Maintainer: Sabyla Solutions <contact@sabylasolutions.com>
+pkgname=sambasense
+pkgver=1.1.1
+pkgrel=1
+pkgdesc="SambaSense - Samba Configuration & Management Application"
+arch=('any')
+url="https://github.com/sabylasolutions/sambasense"
+license=('GPL3')
+depends=('python' 'python-pyqt6' 'samba' 'cifs-utils' 'qt6-svg')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+source=("$pkgname-$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver"
+    python -m build --wheel --no-isolation
+}
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    python -m installer --destdir="$pkgdir" dist/*.whl
+
+    # Desktop file
+    install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/sambasense.desktop" << EOF
+[Desktop Entry]
+Name=SambaSense
+Comment=Samba Configuration & Management
+Exec=sambasense gui
+Icon=sambasense
+Terminal=false
+Type=Application
+Categories=System;Network;Settings;
+Keywords=samba;smb;cifs;share;network;
+EOF
+
+    # Icon
+    install -Dm644 assets/sambasense.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/sambasense.svg"
+}

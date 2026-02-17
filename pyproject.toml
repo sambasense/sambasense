@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sambasense"
+version = "1.0.0"
+description = "Samba configuration and management application with GUI and CLI"
+readme = "README.md"
+license = {text = "GPL-3.0-or-later"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Sabyla Solutions"}
+]
+dependencies = [
+    "PyQt6>=6.5",
+]
+
+[project.scripts]
+sambasense = "sambasense.__main__:main"
+
+[project.gui-scripts]
+sambasense-gui = "sambasense.__main__:main_gui"
+
+[tool.setuptools.packages.find]
+include = ["sambasense*"]

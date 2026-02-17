@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+# Post-install: install Python package
+pip3 install --break-system-packages /opt/sambasense/ 2>/dev/null || pip3 install /opt/sambasense/
+
+echo "SambaSense installed. Run 'sambasense' to get started."
