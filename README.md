@@ -14,6 +14,7 @@
   <img alt="PyQt6" src="https://img.shields.io/badge/PyQt6-6.5+-41CD52?style=flat-square&logo=qt&logoColor=white"/>
   <img alt="License" src="https://img.shields.io/badge/License-MIT-FFD700?style=flat-square"/>
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux-FCC624?style=flat-square&logo=linux&logoColor=black"/>
+  <a href="https://ko-fi.com/sabylasolutions"><img alt="Ko-fi" src="https://img.shields.io/badge/Donate-Ko--fi-F16061?style=flat-square&logo=ko-fi&logoColor=white"/></a>
 </p>
 
 ---
@@ -129,5 +130,5 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 ---
 
 <p align="center">
-  <sub>Made with ☕ by <a href="https://sambasense.com">SambaSense</a></sub>
+  <sub>Made with ☕ by <a href="https://ko-fi.com/sabylasolutions">Sabyla Solutions</a></sub>
 </p>
