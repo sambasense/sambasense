@@ -1,10 +1,10 @@
-# Maintainer: Sabyla Solutions <contact@sabylasolutions.com>
+# Maintainer: SambaSense <contact@sambasense.com>
 pkgname=sambasense
 pkgver=1.1.1
 pkgrel=1
 pkgdesc="SambaSense - Samba Configuration & Management Application"
 arch=('any')
-url="https://github.com/sabylasolutions/sambasense"
+url="https://github.com/sambasense/sambasense"
 license=('MIT')
 depends=('python' 'python-pyqt6' 'samba' 'cifs-utils' 'qt6-svg')
 makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')

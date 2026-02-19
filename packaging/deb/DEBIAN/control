@@ -4,9 +4,9 @@ Section: utils
 Priority: optional
 Architecture: all
 Depends: python3 (>= 3.10), python3-pyqt6, samba, cifs-utils
-Maintainer: Sabyla Solutions <contact@sabylasolutions.com>
+Maintainer: SambaSense <contact@sambasense.com>
 Description: SambaSense - Samba Configuration & Management
  A desktop application for installing, configuring, and
  managing Samba shares with rich storage visualizations,
  Material-You theming, and full CLI support.
-Homepage: https://github.com/sabylasolutions/sambasense
+Homepage: https://github.com/sambasense/sambasense

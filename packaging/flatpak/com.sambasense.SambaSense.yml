@@ -1,4 +1,4 @@
-app-id: com.sabyla.SambaSense
+app-id: com.sambasense.SambaSense
 runtime: org.freedesktop.Platform
 runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
@@ -28,8 +28,8 @@ modules:
     buildsystem: simple
     build-commands:
       - pip3 install --no-deps --prefix=/app .
-      - install -Dm644 assets/sambasense.svg /app/share/icons/hicolor/scalable/apps/com.sabyla.SambaSense.svg
-      - install -Dm644 packaging/flatpak/com.sabyla.SambaSense.desktop /app/share/applications/com.sabyla.SambaSense.desktop
+      - install -Dm644 assets/sambasense.svg /app/share/icons/hicolor/scalable/apps/com.sambasense.SambaSense.svg
+      - install -Dm644 packaging/flatpak/com.sambasense.SambaSense.desktop /app/share/applications/com.sambasense.SambaSense.desktop
     sources:
       - type: dir
         path: ../..

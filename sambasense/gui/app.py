@@ -121,7 +121,7 @@ class MainWindow(QMainWindow):
         self._kofi_btn.setIcon(icon_coffee(accent))
         self._kofi_btn.setIconSize(QSize(20, 20))
         self._kofi_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        self._kofi_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://ko-fi.com/sabylasolutions")))
+        self._kofi_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://ko-fi.com/sambasense")))
         theme_layout.addWidget(self._kofi_btn)
 
         sidebar_layout.addWidget(theme_container)

@@ -16,12 +16,12 @@ REPO_DIR="$SCRIPT_DIR/repo"
 flatpak install -y --noninteractive flathub org.freedesktop.Platform//23.08 org.freedesktop.Sdk//23.08 2>/dev/null || true
 
 # Create desktop file for flatpak
-cat > "$SCRIPT_DIR/com.sabyla.SambaSense.desktop" << EOF
+cat > "$SCRIPT_DIR/com.sambasense.SambaSense.desktop" << EOF
 [Desktop Entry]
 Name=SambaSense
 Comment=Samba Configuration & Management
 Exec=sambasense gui
-Icon=com.sabyla.SambaSense
+Icon=com.sambasense.SambaSense
 Terminal=false
 Type=Application
 Categories=System;Network;Settings;
@@ -30,13 +30,13 @@ EOF
 
 # Build
 cd "$SCRIPT_DIR"
-flatpak-builder --force-clean "$BUILD_DIR" com.sabyla.SambaSense.yml
+flatpak-builder --force-clean "$BUILD_DIR" com.sambasense.SambaSense.yml
 
 # Create repo
-flatpak-builder --repo="$REPO_DIR" --force-clean "$BUILD_DIR" com.sabyla.SambaSense.yml
+flatpak-builder --repo="$REPO_DIR" --force-clean "$BUILD_DIR" com.sambasense.SambaSense.yml
 
 # Create bundle
-flatpak build-bundle "$REPO_DIR" "$SCRIPT_DIR/SambaSense.flatpak" com.sabyla.SambaSense
+flatpak build-bundle "$REPO_DIR" "$SCRIPT_DIR/SambaSense.flatpak" com.sambasense.SambaSense
 
 echo ""
 echo "✓ Flatpak built: $SCRIPT_DIR/SambaSense.flatpak"

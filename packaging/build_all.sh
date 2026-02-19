@@ -107,7 +107,7 @@ Section: utils
 Priority: optional
 Architecture: all
 Depends: python3 (>= 3.10), python3-pyqt6, samba, cifs-utils, libqt6svg6
-Maintainer: Sabyla Solutions <contact@sabylasolutions.com>
+Maintainer: SambaSense <contact@sambasense.com>
 Description: SambaSense - Samba Configuration & Management
  A desktop application for installing, configuring, and
  managing Samba shares with rich storage visualizations.
@@ -174,7 +174,7 @@ Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Samba Configuration & Management Application
 License:        MIT
-URL:            https://github.com/sabylasolutions/sambasense
+URL:            https://github.com/sambasense/sambasense
 Source0:        sambasense-%{version}.tar.gz
 BuildArch:      noarch
 Requires:       python3 >= 3.10
@@ -316,7 +316,7 @@ cd /tmp
 mkdir -p build repo
 
 cat > manifest.yml << "MANIFEST"
-app-id: com.sabyla.SambaSense
+app-id: com.sambasense.SambaSense
 runtime: org.freedesktop.Platform
 runtime-version: "23.08"
 sdk: org.freedesktop.Sdk
@@ -336,9 +336,9 @@ modules:
       - mkdir -p /app/bin
       - printf "#!/bin/bash\nexport PYTHONPATH=/app/lib/python3/dist-packages:\$PYTHONPATH\nexec python3 -m sambasense \"\$@\"\n" > /app/bin/sambasense
       - chmod 755 /app/bin/sambasense
-      - install -Dm644 assets/sambasense.svg /app/share/icons/hicolor/scalable/apps/com.sabyla.SambaSense.svg
+      - install -Dm644 assets/sambasense.svg /app/share/icons/hicolor/scalable/apps/com.sambasense.SambaSense.svg
       - mkdir -p /app/share/applications
-      - printf "[Desktop Entry]\nName=SambaSense\nComment=Samba Configuration & Management\nExec=sambasense gui\nIcon=com.sabyla.SambaSense\nTerminal=false\nType=Application\nCategories=System;Network;Settings;\n" > /app/share/applications/com.sabyla.SambaSense.desktop
+      - printf "[Desktop Entry]\nName=SambaSense\nComment=Samba Configuration & Management\nExec=sambasense gui\nIcon=com.sambasense.SambaSense\nTerminal=false\nType=Application\nCategories=System;Network;Settings;\n" > /app/share/applications/com.sambasense.SambaSense.desktop
     sources:
       - type: dir
         path: /src
@@ -346,7 +346,7 @@ MANIFEST
 
 flatpak-builder --force-clean build manifest.yml 2>&1 | tail -5
 flatpak-builder --repo=repo --force-clean build manifest.yml 2>&1 | tail -3
-flatpak build-bundle repo /out/SambaSense.flatpak com.sabyla.SambaSense 2>&1 | tail -3
+flatpak build-bundle repo /out/SambaSense.flatpak com.sambasense.SambaSense 2>&1 | tail -3
 echo "FLATPAK_OK"
 '
 

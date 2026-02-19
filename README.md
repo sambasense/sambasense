@@ -84,7 +84,7 @@ sambasense [command] [options]
 
 ### From Source (Development)
 ```bash
-git clone https://github.com/sabylasolutions/sambasense.git
+git clone https://github.com/sambasense/sambasense.git
 cd sambasense
 pip install -e .
 sambasense --help
@@ -100,12 +100,12 @@ python3 -m sambasense gui        # GUI
 
 | Format | Platform | Build | Download |
 |--------|----------|-------|----------|
-| `.deb` | Debian / Ubuntu / Pop!_OS | `packaging/deb/build.sh` | [Download .deb](https://github.com/sabylasolutions/sambasense/releases/v1.0.0/download/sambasense_1.0.0.deb) |
-| `.rpm` | Fedora / RHEL / CentOS | `packaging/rpm/build.sh` | [Download .rpm](https://github.com/sabylasolutions/sambasense/releases/v1.0.0/download/sambasense-1.0.0-1.fc40.noarch.rpm) |
-| `.pkg.tar.zst` | Arch / Endeavour / Manjaro | `packaging/arch/build.sh` | [Download .pkg.tar.zst](https://github.com/sabylasolutions/sambasense/releases/v1.0.0/download/sambasense-1.0.0-1-any.pkg.tar.zst) |
-| AppImage | Portable Linux | `packaging/appimage/build.sh` | [Download AppImage](https://github.com/sabylasolutions/sambasense/releases/v1.0.0/download/SambaSense-x86_64.AppImage) |
-| Flatpak | Sandboxed Linux | `packaging/flatpak/build.sh` | [Download Flatpak](https://github.com/sabylasolutions/sambasense/releases/v1.0.0/download/SambaSense.flatpak) |
-| Homebrew | macOS (Darwin) | `brew install sambasense` | [GitHub Release](https://github.com/sabylasolutions/sambasense/releases/v1.0.0) |
+| `.deb` | Debian / Ubuntu / Pop!_OS | `packaging/deb/build.sh` | [Download .deb](https://github.com/sambasense/sambasense/releases/v1.0.0/download/sambasense_1.0.0.deb) |
+| `.rpm` | Fedora / RHEL / CentOS | `packaging/rpm/build.sh` | [Download .rpm](https://github.com/sambasense/sambasense/releases/v1.0.0/download/sambasense-1.0.0-1.fc40.noarch.rpm) |
+| `.pkg.tar.zst` | Arch / Endeavour / Manjaro | `packaging/arch/build.sh` | [Download .pkg.tar.zst](https://github.com/sambasense/sambasense/releases/v1.0.0/download/sambasense-1.0.0-1-any.pkg.tar.zst) |
+| AppImage | Portable Linux | `packaging/appimage/build.sh` | [Download AppImage](https://github.com/sambasense/sambasense/releases/v1.0.0/download/SambaSense-x86_64.AppImage) |
+| Flatpak | Sandboxed Linux | `packaging/flatpak/build.sh` | [Download Flatpak](https://github.com/sambasense/sambasense/releases/v1.0.0/download/SambaSense.flatpak) |
+| Homebrew | macOS (Darwin) | `brew install sambasense` | [GitHub Release](https://github.com/sambasense/sambasense/releases/v1.0.0) |
 
 ## Requirements
 
@@ -129,5 +129,5 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 ---
 
 <p align="center">
-  <sub>Made with ☕ by <a href="https://sabylasolutions.com">Sabyla Solutions</a></sub>
+  <sub>Made with ☕ by <a href="https://sambasense.com">SambaSense</a></sub>
 </p>

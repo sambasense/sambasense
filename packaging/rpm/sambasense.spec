@@ -3,7 +3,7 @@ Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Samba Configuration & Management Application
 License:        MIT
-URL:            https://github.com/sabylasolutions/sambasense
+URL:            https://github.com/sambasense/sambasense
 Source0:        sambasense-%{version}.tar.gz
 
 BuildArch:      noarch
@@ -45,5 +45,5 @@ install -Dm644 assets/sambasense.svg %{buildroot}%{_datadir}/icons/hicolor/scala
 %{_datadir}/icons/hicolor/scalable/apps/sambasense.svg
 
 %changelog
-* Fri Feb 14 2026 Sabyla Solutions <contact@sabylasolutions.com> - 1.0.0-1
+* Fri Feb 14 2026 SambaSense <contact@sambasense.com> - 1.0.0-1
 - Initial release

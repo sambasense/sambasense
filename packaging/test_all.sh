@@ -236,7 +236,7 @@ else
         flatpak install -y --noninteractive --user /app.flatpak >/dev/null 2>&1
         
         echo "  [TEST] CLI version..."
-        flatpak run --user --command=sambasense com.sabyla.SambaSense --version
+        flatpak run --user --command=sambasense com.sambasense.SambaSense --version
         
         echo "  [TEST] Unit tests..."
         # Running unit tests inside flatpak sandbox is harder because we need to inject the tests
@@ -246,9 +246,9 @@ else
         # We can use --filesystem to map tests?
         # The manifest has --filesystem=host, so we can access /tests if we map it to container first
         # Container /tests is mapped to host /.../tests
-        # So flatpak run --user --filesystem=/tests com.sabyla.SambaSense --command=python3 -m unittest discover /tests -v
+        # So flatpak run --user --filesystem=/tests com.sambasense.SambaSense --command=python3 -m unittest discover /tests -v
         
-        flatpak run --user --filesystem=/tests --command=python3 com.sabyla.SambaSense -m unittest discover /tests -v 2>&1 | tail -5
+        flatpak run --user --filesystem=/tests --command=python3 com.sambasense.SambaSense -m unittest discover /tests -v 2>&1 | tail -5
         
         echo "FLATPAK_TEST_OK"
         ' 2>&1 | tee /tmp/flatpak_test.log
