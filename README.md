@@ -130,7 +130,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 ---
 
 <p align="center">
-  <sub>Made with ☕ by <a href="https://ko-fi.com/sabylasolutions">Sabyla Solutions</a></sub>
-  <sub>If you found my work useful, please consider supporting me on <a href="https://ko-fi.com/sabylasolutions">Ko-fi</a></sub>
+  <sub>Made with ☕ by <a href="https://ko-fi.com/sabylasolutions">Sabyla Solutions</a></sub><br>
+  <sub>If you found my work useful, please consider supporting me on <a href="https://ko-fi.com/sabylasolutions">Ko-fi</a></sub><br>
   <sub>Copyright © 2026 SambaSense. All rights reserved.</sub>
 </p>
