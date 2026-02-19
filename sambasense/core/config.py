@@ -164,11 +164,8 @@ def add_share(
 
     _backup_conf()
     try:
-        # Write via tee for privilege escalation
-        run_cmd(
-            ["bash", "-c", f"echo '{share_block}' | tee -a {SMB_CONF_PATH}"],
-            sudo=True,
-        )
+        # Pipe content via stdin to tee — no shell involved, safe from injection
+        run_cmd(["tee", "-a", SMB_CONF_PATH], sudo=True, input=share_block)
         return True, f"Share '{name}' added successfully."
     except Exception as e:
         return False, f"Failed to add share: {e}"
@@ -201,10 +198,8 @@ def remove_share(name: str) -> tuple[bool, str]:
     new_content = re.sub(r"\n{3,}", "\n\n", new_content)
 
     try:
-        run_cmd(
-            ["bash", "-c", f"echo '{new_content}' | tee {SMB_CONF_PATH}"],
-            sudo=True,
-        )
+        # Pipe content via stdin to tee — no shell involved, safe from injection
+        run_cmd(["tee", SMB_CONF_PATH], sudo=True, input=new_content)
         return True, f"Share '{name}' removed."
     except Exception as e:
         return False, f"Failed to remove share: {e}"
@@ -243,10 +238,8 @@ def edit_share(name: str, options: dict[str, str]) -> tuple[bool, str]:
     new_content = re.sub(pattern, new_section.rstrip(), content, flags=re.DOTALL)
 
     try:
-        run_cmd(
-            ["bash", "-c", f"cat > {SMB_CONF_PATH} << 'SAMBA_EOF'\n{new_content}\nSAMBA_EOF"],
-            sudo=True,
-        )
+        # Pipe content via stdin to tee — no shell involved, safe from injection
+        run_cmd(["tee", SMB_CONF_PATH], sudo=True, input=new_content)
         return True, f"Share '{name}' updated."
     except Exception as e:
         return False, f"Failed to edit share: {e}"

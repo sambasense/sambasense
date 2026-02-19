@@ -2,7 +2,7 @@ Name:           sambasense
 Version:        1.1.1
 Release:        1%{?dist}
 Summary:        Samba Configuration & Management Application
-License:        GPLv3+
+License:        MIT
 URL:            https://github.com/sabylasolutions/sambasense
 Source0:        sambasense-%{version}.tar.gz
 
@@ -42,7 +42,7 @@ install -Dm644 assets/sambasense.svg %{buildroot}%{_datadir}/icons/hicolor/scala
 %{python3_sitelib}/sambasense-*.egg-info/
 %{_bindir}/sambasense
 %{_datadir}/applications/sambasense.desktop
-%{_datadir}/icons/hicolor/128x128/apps/sambasense.svg
+%{_datadir}/icons/hicolor/scalable/apps/sambasense.svg
 
 %changelog
 * Fri Feb 14 2026 Sabyla Solutions <contact@sabylasolutions.com> - 1.0.0-1

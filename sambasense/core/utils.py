@@ -4,6 +4,7 @@ import subprocess
 import shutil
 import os
 import platform
+from typing import Optional
 
 
 def detect_distro() -> str:
@@ -53,6 +54,7 @@ def run_cmd(
     capture: bool = True,
     check: bool = True,
     timeout: int = 120,
+    input: Optional[str] = None,
 ) -> subprocess.CompletedProcess:
     """Run a shell command, optionally with sudo.
 
@@ -86,6 +88,7 @@ def run_cmd(
         text=True,
         check=check,
         timeout=timeout,
+        input=input,
     )
 
 

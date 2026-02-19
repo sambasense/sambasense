@@ -133,7 +133,7 @@ def uninstall_samba() -> tuple[bool, str]:
 
     # Stop service first (for Linux)
     if platform.system() != "Darwin":
-        run_cmd(["systemctl", "disable", "--now", "smbd"], sudo=True, check=False)
+        run_cmd(["systemctl", "disable", "--now", _get_service_name()], sudo=True, check=False)
 
     packages = _SAMBA_PACKAGES.get(distro, [])
     cmd = _UNINSTALL_CMD[distro] + packages
@@ -155,7 +155,7 @@ def enable_service() -> tuple[bool, str]:
             return False, f"Failed to enable service: {e}"
 
     try:
-        run_cmd(["systemctl", "enable", "--now", "smbd"], sudo=True)
+        run_cmd(["systemctl", "enable", "--now", _get_service_name()], sudo=True)
         return True, "Samba service enabled and started."
     except Exception as e:
         return False, f"Failed to enable service: {e}"
@@ -171,7 +171,7 @@ def disable_service() -> tuple[bool, str]:
             return False, f"Failed to disable service: {e}"
 
     try:
-        run_cmd(["systemctl", "disable", "--now", "smbd"], sudo=True)
+        run_cmd(["systemctl", "disable", "--now", _get_service_name()], sudo=True)
         return True, "Samba service disabled and stopped."
     except Exception as e:
         return False, f"Failed to disable service: {e}"
@@ -187,7 +187,7 @@ def start_service() -> tuple[bool, str]:
             return False, f"Failed to start service: {e}"
 
     try:
-        run_cmd(["systemctl", "start", "smbd"], sudo=True)
+        run_cmd(["systemctl", "start", _get_service_name()], sudo=True)
         return True, "Samba service started."
     except Exception as e:
         return False, f"Failed to start service: {e}"
@@ -203,7 +203,7 @@ def stop_service() -> tuple[bool, str]:
             return False, f"Failed to stop service: {e}"
 
     try:
-        run_cmd(["systemctl", "stop", "smbd"], sudo=True)
+        run_cmd(["systemctl", "stop", _get_service_name()], sudo=True)
         return True, "Samba service stopped."
     except Exception as e:
         return False, f"Failed to stop service: {e}"

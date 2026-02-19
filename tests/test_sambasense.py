@@ -344,7 +344,8 @@ class TestStorage(unittest.TestCase):
         self.assertGreater(usage["total"], 0)
         self.assertGreaterEqual(usage["used"], 0)
         self.assertGreaterEqual(usage["free"], 0)
-        self.assertEqual(usage["total"], usage["used"] + usage["free"])
+        # Linux reserves blocks for root, so total >= used + free (not strict equality)
+        self.assertGreaterEqual(usage["total"], usage["used"] + usage["free"])
 
     def test_get_disk_usage_nonexistent(self):
         from sambasense.core.storage import get_disk_usage
@@ -636,7 +637,7 @@ class TestThemeManager(unittest.TestCase):
         qss = tm.generate_stylesheet()
         self.assertIsInstance(qss, str)
         self.assertIn("#0a0a0b", qss)  # Dark bg
-        self.assertIn("#f6d32d", qss)  # Default accent (yellow)
+        self.assertIn("#FFD700", qss)  # Default accent (gold)
         self.assertGreater(len(qss), 500)
 
     def test_accent_bg_dark(self):

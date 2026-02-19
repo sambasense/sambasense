@@ -121,7 +121,7 @@ echo "SambaSense installed. Run sambasense to get started."
 POSTINST
 chmod 755 "$B/DEBIAN/postinst"
 
-printf "#!/bin/bash\nexec python3 -m sambasense \"\$@\"\n" > "$B/usr/bin/sambasense"
+printf "#!/bin/bash\nexport PYTHONPATH=/opt/sambasense:\$PYTHONPATH\nexec python3 -m sambasense \"\$@\"\n" > "$B/usr/bin/sambasense"
 chmod 755 "$B/usr/bin/sambasense"
 
 cat > "$B/usr/share/applications/sambasense.desktop" << EOF
@@ -192,7 +192,7 @@ cp -r sambasense %{buildroot}/opt/sambasense/
 cp setup.py pyproject.toml requirements.txt %{buildroot}/opt/sambasense/
 
 mkdir -p %{buildroot}%{_bindir}
-printf "#!/bin/bash\nexec python3 -m sambasense \"\$@\"\n" > %{buildroot}%{_bindir}/sambasense
+printf "#!/bin/bash\nexport PYTHONPATH=/opt/sambasense:\$PYTHONPATH\nexec python3 -m sambasense \"\$@\"\n" > %{buildroot}%{_bindir}/sambasense
 chmod 755 %{buildroot}%{_bindir}/sambasense
 
 mkdir -p %{buildroot}%{_datadir}/applications

@@ -215,9 +215,27 @@ class DashboardPage(QWidget):
         pie = PieChartWidget(accent=self._accent)
         pie.setFixedSize(120, 120)
         color = CHART_COLORS[index % len(CHART_COLORS)]
+        # Theme-aware "Free" color (dim text/border color)
+        # We can't easily get the palette here without passing it or looking up parent.
+        # But we can use a safe default or ask the widget to handle "transparent/dim" if we pass None?
+        # Better: use a hardcoded safe color that works in both or just use the widget's palette in paintEvent if color is None.
+        # Let's use a semi-transparent gray that works on both dark/light
+        free_col = "#2a2a30" if "0a0a0b" in self._accent else "#e0e0e4"  # Primitive check, unreliable
+        # Actually, let's just pass a specific key that the widget understands, or use a color we know works.
+        # In light mode, #2a2a30 is too dark. In dark mode, it's fine.
+        # Let's rely on the fact that we can pass a QColor or let the widget handle it?
+        # The widget currently expects a hex string or uses a default from CHART_COLORS.
+        # Let's change the widget to use a default if we pass "theme_dim".
+        
+        # Actually, best approach: check self.palette().windowText().color() logic in the widget or just pass a color.
+        # Since we are in the page, we can access the theme manager if we really wanted, but we don't have it easily.
+        # However, we know if we are in dark mode based on the passed accent? No.
+        # But wait, dashboard_page receives accent but not the mode.
+        # Let's update `PieChartWidget` to handle a special "dim" color type or just default the 'Free' flavor to a dim color from palette.
+        
         pie.set_data([
             {"label": "Used", "value": stat["used"], "color": color},
-            {"label": "Free", "value": stat["free"], "color": "#2a2a30"},
+            {"label": "Free", "value": stat["free"], "color": "palette_dim"},
         ])
         charts.addWidget(pie)
 

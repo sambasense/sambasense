@@ -7,15 +7,20 @@ from PyQt6.QtGui import QColor, QFont, QFontDatabase, QIcon
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QStackedWidget, QLabel, QColorDialog, QSizePolicy,
+    QPushButton, QStackedWidget, QLabel, QColorDialog, QSizePolicy,
     QSpacerItem,
 )
+from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QDesktopServices
 from sambasense.gui.widgets.toggle import ToggleSwitch
 
 from sambasense import __app_name__, __version__
 from sambasense.gui.theme import ThemeManager
 from sambasense.gui.icons import (
     icon_download, icon_folder_share, icon_link,
+    icon_download, icon_folder_share, icon_link,
     icon_chart_pie, icon_chart_line, icon_sun, icon_moon, icon_palette,
+    icon_coffee,
 )
 from sambasense.gui.pages.install_page import InstallPage
 from sambasense.gui.pages.shares_page import SharesPage
@@ -109,6 +114,16 @@ class MainWindow(QMainWindow):
         self._accent_btn.clicked.connect(self._pick_accent)
         picker_row.addWidget(self._accent_btn)
         theme_layout.addLayout(picker_row)
+        
+        # Ko-fi Button
+        self._kofi_btn = QPushButton("  Buy me a coffee")
+        self._kofi_btn.setObjectName("navButton")
+        self._kofi_btn.setIcon(icon_coffee(accent))
+        self._kofi_btn.setIconSize(QSize(20, 20))
+        self._kofi_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._kofi_btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://ko-fi.com/sabylasolutions")))
+        theme_layout.addWidget(self._kofi_btn)
+
         sidebar_layout.addWidget(theme_container)
 
         root.addWidget(sidebar)
@@ -167,6 +182,7 @@ class MainWindow(QMainWindow):
             btn.setIcon(fn(accent))
 
         self._accent_btn.setIcon(icon_palette(accent))
+        self._kofi_btn.setIcon(icon_coffee(accent))
         self._update_toggle_style()
 
         # Update pages
@@ -205,7 +221,10 @@ def run_app():
         sys.exit(app.exec())
         
     except Exception:
-        with open("/tmp/sambasense_crash.log", "w") as f:
+        crash_dir = os.path.expanduser("~/.local/share/sambasense")
+        os.makedirs(crash_dir, exist_ok=True)
+        crash_log = os.path.join(crash_dir, "crash.log")
+        with open(crash_log, "w") as f:
             f.write(traceback.format_exc())
         sys.exit(1)
 

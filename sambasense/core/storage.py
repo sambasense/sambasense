@@ -1,5 +1,6 @@
 """Storage information and disk usage statistics."""
 
+import hashlib
 import json
 import os
 import shutil
@@ -112,7 +113,7 @@ def record_usage(path: str, label: str = ""):
         label: Friendly label (share name or mount point).
     """
     _ensure_history_dir()
-    safe_name = path.replace("/", "_").strip("_")
+    safe_name = hashlib.sha256(path.encode()).hexdigest()
     history_file = os.path.join(_HISTORY_DIR, f"{safe_name}.json")
 
     data_points = _load_history_file(history_file)
@@ -139,7 +140,7 @@ def get_usage_history(path: str, max_points: int = 50) -> list[dict]:
     Returns:
         List of dicts with: 'timestamp', 'total', 'used', 'free', 'label'.
     """
-    safe_name = path.replace("/", "_").strip("_")
+    safe_name = hashlib.sha256(path.encode()).hexdigest()
     history_file = os.path.join(_HISTORY_DIR, f"{safe_name}.json")
     data = _load_history_file(history_file)
     return data[-max_points:]

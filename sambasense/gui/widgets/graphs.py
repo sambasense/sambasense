@@ -79,7 +79,14 @@ class PieChartWidget(QWidget):
         start_angle = 90 * 16  # Start at top
         for i, item in enumerate(self._data):
             span = int((item["value"] / total) * 360 * 16)
-            color = QColor(item.get("color", CHART_COLORS[i % len(CHART_COLORS)]))
+            col_val = item.get("color", CHART_COLORS[i % len(CHART_COLORS)])
+            if col_val == "palette_dim":
+                # Use a dim color derived from palette
+                c = self.palette().text().color()
+                c.setAlpha(30)
+                color = c
+            else:
+                color = QColor(col_val)
 
             if i == self._hovered_index:
                 color = color.lighter(130)
@@ -198,7 +205,16 @@ class LineGraphWidget(QWidget):
         if not self._data or len(self._data) < 2:
             painter = QPainter(self)
             painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-            painter.setPen(QColor("#606068"))
+            
+            # Use palette text dim color
+            dim_col = self.palette().placeholderText().color()
+            if not dim_col.isValid():
+                 # Fallback if placeholderText not set (it usually isn't in default palette)
+                 # We can use text() with alpha
+                 dim_col = self.palette().text().color()
+                 dim_col.setAlpha(100)
+                 
+            painter.setPen(dim_col)
             font = QFont("Inter", 11)
             painter.setFont(font)
             painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, "Not enough data")
@@ -225,8 +241,11 @@ class LineGraphWidget(QWidget):
         def to_y(v):
             return margin_t + plot_h - ((v - v_min) / (v_max - v_min)) * plot_h
 
-        # Grid lines
-        grid_pen = QPen(QColor("#2a2a30"), 1)
+
+        # Grid lines - use weak text color
+        grid_col = self.palette().text().color()
+        grid_col.setAlpha(30)
+        grid_pen = QPen(grid_col, 1)
         painter.setPen(grid_pen)
         for i in range(5):
             y = margin_t + (i / 4) * plot_h
@@ -235,7 +254,12 @@ class LineGraphWidget(QWidget):
         # Y-axis labels
         label_font = QFont("Inter", 9)
         painter.setFont(label_font)
-        painter.setPen(QColor("#606068"))
+        
+        # Use secondary text color
+        text_col = self.palette().text().color()
+        text_col.setAlpha(150)
+        painter.setPen(text_col)
+        
         for i in range(5):
             y = margin_t + (i / 4) * plot_h
             val = v_max - (i / 4) * (v_max - v_min)

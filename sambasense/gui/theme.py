@@ -96,6 +96,15 @@ class ThemeManager:
 
     # ── Derived colors ─────────────────────────────────────
 
+    def get_contrast_text(self, hex_color: str) -> str:
+        """Return black or white text depending on background luminance."""
+        c = QColor(hex_color)
+        # Calculate relative luminance using standard formula
+        # L = 0.2126 * R + 0.7152 * G + 0.0722 * B
+        lum = 0.2126 * c.red() + 0.7152 * c.green() + 0.0722 * c.blue()
+        # Threshold of 128 (approx middle of 0-255) is common
+        return "#000000" if lum > 140 else "#ffffff"
+
     def accent_hover(self) -> str:
         c = QColor(self.accent)
         c.setAlpha(200)
@@ -124,6 +133,7 @@ class ThemeManager:
         ah = self.accent_hover()
         ap = self.accent_pressed()
         ab = self.accent_bg()
+        act = self.get_contrast_text(a)
 
         return f"""
 /* ── Global ────────────────────────────────────────── */
@@ -180,7 +190,7 @@ QFrame#card:hover {{
 /* ── Buttons ───────────────────────────────────────── */
 QPushButton#primaryButton {{
     background-color: {a};
-    color: #000000;
+    color: {act};
     border: none;
     border-radius: 10px;
     padding: 10px 24px;
@@ -369,7 +379,7 @@ QLabel#dimLabel {{
 
 /* ── Status badges ─────────────────────────────────── */
 QLabel#statusRunning {{
-    background-color: rgba(74, 222, 128, 40);
+    background-color: rgba({QColor(p['success']).red()}, {QColor(p['success']).green()}, {QColor(p['success']).blue()}, 40);
     color: {p['success']};
     border-radius: 6px;
     padding: 4px 12px;
@@ -378,7 +388,7 @@ QLabel#statusRunning {{
 }}
 
 QLabel#statusStopped {{
-    background-color: rgba(255, 77, 106, 40);
+    background-color: rgba({QColor(p['danger']).red()}, {QColor(p['danger']).green()}, {QColor(p['danger']).blue()}, 40);
     color: {p['danger']};
     border-radius: 6px;
     padding: 4px 12px;
@@ -387,7 +397,7 @@ QLabel#statusStopped {{
 }}
 
 QLabel#statusUnknown {{
-    background-color: rgba(160, 160, 168, 40);
+    background-color: rgba({QColor(p['text_dim']).red()}, {QColor(p['text_dim']).green()}, {QColor(p['text_dim']).blue()}, 40);
     color: {p['text_secondary']};
     border-radius: 6px;
     padding: 4px 12px;
@@ -446,7 +456,7 @@ QGroupBox::title {{
     subcontrol-position: top left;
     left: 12px;
     padding: 0 8px;
-    color: {a};
+    color: {p['text_primary']};
     background-color: {p['bg_surface']}; /* Hide border behind title */
 }}
 

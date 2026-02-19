@@ -3,6 +3,7 @@
 import os
 import re
 import platform
+import tempfile
 from typing import Optional
 
 from sambasense.core.utils import run_cmd
@@ -86,41 +87,63 @@ def mount_share(
 
     # Build mount command
     if platform.system() == "Darwin":
-        # macOS uses mount_smbfs
-        # Format: mount_smbfs //user:pass@host/share /target
+        # macOS uses mount_smbfs.  mount_smbfs has no credentials-file interface,
+        # so we embed only the username in the URL and let the OS prompt for the
+        # password via its native authentication dialog.  Embedding the password
+        # in the URL exposes it in `ps aux`; omitting it avoids that risk.
         if username:
-            cred = f"{username}"
-            if password:
-                cred += f":{password}"
-            remote_with_cred = remote.replace("//", f"//{cred}@")
+            remote_with_user = remote.replace("//", f"//{username}@")
         else:
-            remote_with_cred = remote
+            remote_with_user = remote
+        cmd = ["mount_smbfs", remote_with_user, local]
+        try:
+            run_cmd(cmd, sudo=True)
+            return True, f"Mounted {remote} at {local}"
+        except Exception as e:
+            return False, f"Mount failed: {e}"
 
-        cmd = ["mount_smbfs", remote_with_cred, local]
-    else:
-        # Linux uses mount -t cifs
-        cmd = ["mount", "-t", "cifs", remote, local]
-        mount_opts = []
-        if username:
-            mount_opts.append(f"username={username}")
+    # Linux uses mount -t cifs with a credentials file so the password is
+    # never visible in the process table or shell history.
+    cmd = ["mount", "-t", "cifs", remote, local]
+    mount_opts: list[str] = []
+    creds_path: Optional[str] = None
+
+    try:
+        if username or password or domain:
+            creds_lines: list[str] = []
+            if username:
+                creds_lines.append(f"username={username}")
+            if password:
+                creds_lines.append(f"password={password}")
+            if domain:
+                creds_lines.append(f"domain={domain}")
+            creds_content = "\n".join(creds_lines) + "\n"
+
+            # Write to a temp file readable only by the current user
+            creds_fd, creds_path = tempfile.mkstemp(suffix=".cred", prefix="sambasense_")
+            os.chmod(creds_path, 0o600)
+            with os.fdopen(creds_fd, "w") as f:
+                f.write(creds_content)
+            mount_opts.append(f"credentials={creds_path}")
         else:
             mount_opts.append("guest")
-        if password:
-            mount_opts.append(f"password={password}")
-        if domain:
-            mount_opts.append(f"domain={domain}")
-        # Add uid/gid for user-level access
+
         mount_opts.append(f"uid={os.getuid()}")
         mount_opts.append(f"gid={os.getgid()}")
         if options:
             mount_opts.append(options)
         cmd += ["-o", ",".join(mount_opts)]
 
-    try:
         run_cmd(cmd, sudo=True)
         return True, f"Mounted {remote} at {local}"
     except Exception as e:
         return False, f"Mount failed: {e}"
+    finally:
+        if creds_path and os.path.exists(creds_path):
+            try:
+                os.unlink(creds_path)
+            except OSError:
+                pass
 
 
 def unmount_share(local: str) -> tuple[bool, str]:
@@ -165,21 +188,29 @@ def add_fstab_entry(
 
     fstab_line = f"{remote}  {local}  cifs  {mount_opts}  0  0\n"
 
-    # Check for existing entry
+    # Check for existing entry — match the first field exactly to avoid
+    # substring false-positives (e.g. //server/share matching //server/share2)
+    def _fstab_has_entry(content: str) -> bool:
+        for line in content.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            if stripped.split()[0] == remote:
+                return True
+        return False
+
     try:
         with open("/etc/fstab", "r") as f:
-            if remote in f.read():
+            if _fstab_has_entry(f.read()):
                 return False, f"Entry for {remote} already exists in fstab."
     except PermissionError:
         result = run_cmd(["cat", "/etc/fstab"], sudo=True, check=False)
-        if remote in result.stdout:
+        if _fstab_has_entry(result.stdout):
             return False, f"Entry for {remote} already exists in fstab."
 
     try:
-        run_cmd(
-            ["bash", "-c", f"echo '{fstab_line}' | tee -a /etc/fstab"],
-            sudo=True,
-        )
+        # Pipe content via stdin to tee — no shell involved, safe from injection
+        run_cmd(["tee", "-a", "/etc/fstab"], sudo=True, input=fstab_line)
         return True, f"Added fstab entry for {remote}."
     except Exception as e:
         return False, f"Failed to add fstab entry: {e}"
@@ -198,10 +229,8 @@ def remove_fstab_entry(remote: str) -> tuple[bool, str]:
         if len(new_lines) == len(lines):
             return False, f"No fstab entry found for {remote}."
         new_content = "".join(new_lines)
-        run_cmd(
-            ["bash", "-c", f"cat > /etc/fstab << 'FSTAB_EOF'\n{new_content}\nFSTAB_EOF"],
-            sudo=True,
-        )
+        # Pipe content via stdin to tee — no shell involved, safe from injection
+        run_cmd(["tee", "/etc/fstab"], sudo=True, input=new_content)
         return True, f"Removed fstab entry for {remote}."
     except Exception as e:
         return False, f"Failed to remove fstab entry: {e}"

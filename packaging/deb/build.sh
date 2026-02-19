@@ -5,7 +5,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 PKG_NAME="sambasense"
-PKG_VERSION="1.0.0"
+PKG_VERSION="1.1.1"
 BUILD_DIR="$SCRIPT_DIR/build"
 PKG_DIR="$BUILD_DIR/${PKG_NAME}_${PKG_VERSION}"
 
